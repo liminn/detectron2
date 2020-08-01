@@ -3,7 +3,7 @@
 
 import torch
 from torch import nn
-
+import numpy as np
 from detectron2.structures import ImageList
 
 from ..backbone import build_backbone
@@ -76,7 +76,7 @@ class PanopticFPN(nn.Module):
         images = [(x - self.pixel_mean) / self.pixel_std for x in images]
         images = ImageList.from_tensors(images, self.backbone.size_divisibility)
         features = self.backbone(images.tensor)
-
+        
         if "proposals" in batched_inputs[0]:
             proposals = [x["proposals"].to(self.device) for x in batched_inputs]
             proposal_losses = {}
@@ -128,6 +128,19 @@ class PanopticFPN(nn.Module):
                 )
                 processed_results[-1]["panoptic_seg"] = panoptic_r
         return processed_results
+        # # custom postprocess
+        # panoptic_seg, segments_info = processed_results[0]["panoptic_seg"]
+        # custom_results = []
+        # for dict_item in segments_info:
+        #     # 只提取instance mask
+        #     bool_instance = dict_item["isthing"]
+        #     id = dict_item["id"]
+        #     if bool_instance:
+        #         instance_mask = (panoptic_seg==id).cpu().numpy().astype(np.bool)
+        #         custom_results.append([instance_mask, dict_item["score"]])
+        
+        # #return processed_results
+        # return custom_results
 
 
 def combine_semantic_and_instance_outputs(

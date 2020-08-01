@@ -1,56 +1,62 @@
-<img src=".github/Detectron2-Logo-Horz.svg" width="300" >
+# 1.简介
+基于detectron2的PanopticFPN模型仓库
 
-Detectron2 is Facebook AI Research's next generation software system
-that implements state-of-the-art object detection algorithms.
-It is a ground-up rewrite of the previous version,
-[Detectron](https://github.com/facebookresearch/Detectron/),
-and it originates from [maskrcnn-benchmark](https://github.com/facebookresearch/maskrcnn-benchmark/).
+# 2.环境配置
+## Requirements
+- PyTorch ≥ 1.4 and torchvision that matches the PyTorch, 参考[pytorch.org](https://pytorch.org/)
+- OpenCV is optional and needed by demo and visualization, 参考`environment.yml`
 
-<div align="center">
-  <img src="https://user-images.githubusercontent.com/1381301/66535560-d3422200-eace-11e9-9123-5535d469db19.png"/>
-</div>
+## Build Detectron2 from Source
+gcc & g++ ≥ 5 are required. ninja is recommended for faster build. After having them, run:
 
-### What's New
-* It is powered by the [PyTorch](https://pytorch.org) deep learning framework.
-* Includes more features such as panoptic segmentation, densepose, Cascade R-CNN, rotated bounding boxes, etc.
-* Can be used as a library to support [different projects](projects/) on top of it.
-  We'll open source more research projects in this way.
-* It [trains much faster](https://detectron2.readthedocs.io/notes/benchmarks.html).
+```Python
+python -m pip install 'git+https://github.com/facebookresearch/detectron2.git'
+# (add --user if you don't have permission)
 
-See our [blog post](https://ai.facebook.com/blog/-detectron2-a-pytorch-based-modular-object-detection-library-/)
-to see more demos and learn about detectron2.
+# Or, to install it from a local clone:
+git clone https://github.com/facebookresearch/detectron2.git
+python -m pip install -e detectron2
 
-## Installation
-
-See [INSTALL.md](INSTALL.md).
-
-## Quick Start
-
-See [GETTING_STARTED.md](GETTING_STARTED.md),
-or the [Colab Notebook](https://colab.research.google.com/drive/16jcaJoc6bCFAQ96jDe2HwtXj7BMD_-m5).
-
-Learn more at our [documentation](https://detectron2.readthedocs.org).
-And see [projects/](projects/) for some projects that are built on top of detectron2.
-
-## Model Zoo and Baselines
-
-We provide a large set of baseline results and trained models available for download in the [Detectron2 Model Zoo](MODEL_ZOO.md).
-
-
-## License
-
-Detectron2 is released under the [Apache 2.0 license](LICENSE).
-
-## Citing Detectron2
-
-If you use Detectron2 in your research or wish to refer to the baseline results published in the [Model Zoo](MODEL_ZOO.md), please use the following BibTeX entry.
-
-```BibTeX
-@misc{wu2019detectron2,
-  author =       {Yuxin Wu and Alexander Kirillov and Francisco Massa and
-                  Wan-Yen Lo and Ross Girshick},
-  title =        {Detectron2},
-  howpublished = {\url{https://github.com/facebookresearch/detectron2}},
-  year =         {2019}
-}
+# Or if you are on macOS
+CC=clang CXX=clang++ python -m pip install ......
 ```
+ps: To rebuild detectron2 that's built from a local clone, use rm -rf build/ **/*.so to clean the old build first. You often need to rebuild detectron2 after reinstalling PyTorch.
+
+# 3.训练流程
+## 制作COCO格式数据集
+参考脚本：
+- `custom_2_coco_format/scripts/custom_2_coco_instance_format.py`: 生成instance任务的COCO格式数据
+- `custom_2_coco_format/scripts/custom_2_coco_panoptic_format.py`: 生成panoptic任务的COCO格式数据
+- `datasets/prepare_panoptic_fpn.py`: 生成panoptic所需的sementaic segmentation mask
+
+## registe custom dataset
+参考脚本：
+- `detectron2/data/datasets/builtin.py`:
+
+## 配置参数文件
+参考配置文件：
+- `configs/COCO-PanopticSegmentation/panoptic_fpn_R_50_1x_card.yaml`: 卡片任务的配置文件
+- `configs/COCO-PanopticSegmentation/panoptic_fpn_R_50_1x_text.yaml`: 混合文本检测的配置文件
+
+## train/evaluate/visualize/interface
+train:
+```Python
+python3 train_net.py --config-file ../configs/COCO-PanopticSegmentation/panoptic_fpn_R_50_1x_text.yaml --num-gpus 1
+```
+
+evaluate:
+```Python
+python3 train_net.py --config-file ../configs/COCO-PanopticSegmentation/panoptic_fpn_R_50_1x_text.yaml --eval-only MODEL.WEIGHTS /media/dell/6e8a7942-5a27-4e56-bffe-1af5a12aabb4/data/train_results/panoptic_seg/detectron2/text_20200724/model_final.pth OUTPUT_DIR /media/dell/6e8a7942-5a27-4e56-bffe-1af5a12aabb4/data/train_results/panoptic_seg/detectron2/text_20200724/eval
+```
+
+visualize results:
+- `tools/inference.py`
+
+interface:
+- `interface/en_cn_text/panoptic_fpn_mix_text.py`
+
+# 4.相关实验结果
+- 参考文档：[全景分割模型试验对比](https://gostudyai.feishu.cn/docs/doccnHLX4JpFGYaHVedF10Ayl9p#)
+
+# 5.Reference
+- [detectron2](https://github.com/facebookresearch/detectron2)

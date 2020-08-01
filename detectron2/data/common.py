@@ -36,7 +36,7 @@ class MapDataset(data.Dataset):
     def __getitem__(self, idx):
         retry_count = 0
         cur_idx = int(idx)
-
+        
         while True:
             data = self._map_func(self._dataset[cur_idx])
             if data is not None:

@@ -160,7 +160,7 @@ class ResizeShortestEdge(Augmentation):
             size = np.random.choice(self.short_edge_length)
         if size == 0:
             return NoOpTransform()
-
+        
         scale = size * 1.0 / min(h, w)
         if h < w:
             newh, neww = size, scale * w

@@ -148,7 +148,7 @@ class TrainerBase:
     def before_train(self):
         for h in self._hooks:
             h.before_train()
-
+    
     def after_train(self):
         for h in self._hooks:
             h.after_train()

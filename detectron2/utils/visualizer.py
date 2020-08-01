@@ -151,7 +151,9 @@ class _PanopticPrediction:
         self._seg = panoptic_seg
 
         self._sinfo = {s["id"]: s for s in segments_info}  # seg id -> seg info
+        #print(self._sinfo)
         segment_ids, areas = torch.unique(panoptic_seg, sorted=True, return_counts=True)
+        #print(segment_ids, areas)
         areas = areas.numpy()
         sorted_idxs = np.argsort(-areas)
         self._seg_ids, self._seg_areas = segment_ids[sorted_idxs], areas[sorted_idxs]
@@ -159,6 +161,7 @@ class _PanopticPrediction:
         for sid, area in zip(self._seg_ids, self._seg_areas):
             if sid in self._sinfo:
                 self._sinfo[sid]["area"] = float(area)
+        print(self._sinfo)
 
     def non_empty_mask(self):
         """
@@ -390,7 +393,7 @@ class Visualizer:
                 (predictions.pred_masks.any(dim=0) > 0).numpy()
             )
             alpha = 0.3
-
+        
         self.overlay_instances(
             masks=masks,
             boxes=boxes,
@@ -465,8 +468,11 @@ class Visualizer:
                 mask_color = [x / 255 for x in self.metadata.stuff_colors[category_idx]]
             except AttributeError:
                 mask_color = None
-
+            
+            #print("self.metadata.stuff_classes: {}".format(self.metadata.stuff_classes))
+            #print("category_idx: {}".format(category_idx))
             text = self.metadata.stuff_classes[category_idx]
+
             self.draw_binary_mask(
                 mask,
                 color=mask_color,

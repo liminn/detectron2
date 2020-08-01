@@ -18,13 +18,17 @@ from panopticapi.utils import rgb2id
 def _process_panoptic_to_semantic(input_panoptic, output_semantic, segments, id_map):
     panoptic = np.asarray(Image.open(input_panoptic), dtype=np.uint32)
     panoptic = rgb2id(panoptic)
+    #temp = np.unique(panoptic)
+    #print(temp)
     output = np.zeros_like(panoptic, dtype=np.uint8) + 255
     for seg in segments:
         cat_id = seg["category_id"]
         new_cat_id = id_map[cat_id]
         output[panoptic == seg["id"]] = new_cat_id
+    #temp2 = np.unique(output)
+    #print(temp2)
     Image.fromarray(output).save(output_semantic)
-
+    
 
 def separate_coco_semantic_from_panoptic(panoptic_json, panoptic_root, sem_seg_root, categories):
     """
@@ -53,6 +57,7 @@ def separate_coco_semantic_from_panoptic(panoptic_json, panoptic_root, sem_seg_r
     for thing_id in thing_ids:
         id_map[thing_id] = 0
     id_map[0] = 255
+    #print(id_map) # {2: 1, 1: 0, 0: 255}
 
     with open(panoptic_json) as f:
         obj = json.load(f)
@@ -78,7 +83,19 @@ def separate_coco_semantic_from_panoptic(panoptic_json, panoptic_root, sem_seg_r
 
 
 if __name__ == "__main__":
-    dataset_dir = os.path.join(os.getenv("DETECTRON2_DATASETS", "datasets"), "coco")
+    #dataset_dir = os.path.join(os.getenv("DETECTRON2_DATASETS", "datasets"), "coco")
+    #dataset_dir = "/media/dell/6e8a7942-5a27-4e56-bffe-1af5a12aabb4/data/open_source/panoptic_annotations_trainval2017"
+    #dataset_dir = "/media/dell/6e8a7942-5a27-4e56-bffe-1af5a12aabb4/data/card_panoptic_20200718/panoptic"
+    dataset_dir = "/media/dell/6e8a7942-5a27-4e56-bffe-1af5a12aabb4/data/text_panoptic_20200723/panoptic"
+    #print(dataset_dir)
+    
+    # COCO_CATEGORIES = [
+    # {"color": [220, 20, 60], "isthing": 1, "id": 1, "name": "card"},
+    # {"color": [119, 11, 32], "isthing": 0, "id": 2, "name": "background"}]
+    COCO_CATEGORIES = [
+    {"color": [220, 20, 60], "isthing": 1, "id": 1, "name": "text"},
+    {"color": [119, 11, 32], "isthing": 0, "id": 2, "name": "background"}]
+
     for s in ["val2017", "train2017"]:
         separate_coco_semantic_from_panoptic(
             os.path.join(dataset_dir, "annotations/panoptic_{}.json".format(s)),
@@ -86,9 +103,9 @@ if __name__ == "__main__":
             os.path.join(dataset_dir, "panoptic_stuff_{}".format(s)),
             COCO_CATEGORIES,
         )
+    
 
     # Prepare val2017_100 for quick testing:
-
     dest_dir = os.path.join(dataset_dir, "annotations/")
     URL_PREFIX = "https://dl.fbaipublicfiles.com/detectron2/"
     download(URL_PREFIX + "annotations/coco/panoptic_val2017_100.json", dest_dir)
@@ -114,3 +131,4 @@ if __name__ == "__main__":
         os.path.join(dataset_dir, "panoptic_stuff_val2017"),
         os.path.join(dataset_dir, "panoptic_stuff_val2017_100"),
     )
+    

@@ -58,7 +58,7 @@ def load_coco_json(json_file, image_root, dataset_name=None, extra_annotation_ke
         coco_api = COCO(json_file)
     if timer.seconds() > 1:
         logger.info("Loading {} takes {:.2f} seconds.".format(json_file, timer.seconds()))
-
+    
     id_map = None
     if dataset_name is not None:
         meta = MetadataCatalog.get(dataset_name)
@@ -67,7 +67,7 @@ def load_coco_json(json_file, image_root, dataset_name=None, extra_annotation_ke
         # The categories in a custom json file may not be sorted.
         thing_classes = [c["name"] for c in sorted(cats, key=lambda x: x["id"])]
         meta.thing_classes = thing_classes
-
+        
         # In COCO, certain category ids are artificially removed,
         # and by convention they are always ignored.
         # We deal with COCO's id issue and translate
@@ -85,7 +85,7 @@ Category ids in annotations are not in [1, #categories]! We'll apply a mapping f
                 )
         id_map = {v: i for i, v in enumerate(cat_ids)}
         meta.thing_dataset_id_to_contiguous_id = id_map
-
+    
     # sort indices for reproducible results
     img_ids = sorted(coco_api.imgs.keys())
     # imgs is a list of dicts, each looks something like:
@@ -223,7 +223,7 @@ def load_sem_seg(gt_root, image_root, gt_ext="png", image_ext="jpg"):
         1. This function does not read the image and ground truth files.
            The results do not have the "image" and "sem_seg" fields.
     """
-
+    
     # We match input images with ground truth based on their relative filepaths (without file
     # extensions) starting from 'image_root' and 'gt_root' respectively.
     def file2id(folder_path, file_path):

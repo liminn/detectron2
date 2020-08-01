@@ -15,6 +15,8 @@ Therefore, we recommend you to use detectron2 as an library and take
 this file as an example of how to use the library.
 You may want to write your own script with your datasets and other customizations.
 """
+import os
+os.environ["CUDA_VISIBLE_DEVICES"]="0"
 
 import logging
 import os
@@ -38,7 +40,6 @@ from detectron2.evaluation import (
     verify_results,
 )
 from detectron2.modeling import GeneralizedRCNNWithTTA
-
 
 class Trainer(DefaultTrainer):
     """
@@ -126,7 +127,7 @@ def setup(args):
     cfg.freeze()
     default_setup(cfg, args)
     return cfg
-
+    
 
 def main(args):
     cfg = setup(args)
@@ -149,6 +150,19 @@ def main(args):
     subclassing the trainer.
     """
     trainer = Trainer(cfg)
+
+    # test
+    #AttributeError: Attribute 'stuff_dataset_id_to_contiguous_id' does not exist in the metadata of dataset 'custom_card_val_separated'. Available keys are dict_keys(['name', 'panoptic_root', 'image_root', 'panoptic_json', 'sem_seg_root', 'json_file', 'evaluator_type', 'stuff_classes', 'thing_classes', 'thing_dataset_id_to_contiguous_id']).
+    #train_dataset_name = "custom_card_train_separated"
+    #val_dataset_name = "custom_card_val_separated"
+    #metadata = MetadataCatalog.get(train_dataset_name)
+    #print("aaaaaaaaaaaa\n")
+    #print(metadata.thing_classes) # ['card', 'background']
+    #print(metadata.thing_dataset_id_to_contiguous_id) # {1: 0, 2: 1}
+    #print(metadata.stuff_classes)
+    #print(metadata.stuff_dataset_id_to_contiguous_id)
+    #print("aaaaaaaaaaaa\n")
+    
     trainer.resume_or_load(resume=args.resume)
     if cfg.TEST.AUG.ENABLED:
         trainer.register_hooks(
@@ -158,6 +172,14 @@ def main(args):
 
 
 if __name__ == "__main__":
+    # test
+    # from detectron2.data import MetadataCatalog
+    # train_dataset_name = "custom_card_train_separated"
+    # val_dataset_name = "custom_card_val_separated"
+    # metadata = MetadataCatalog.get(train_dataset_name)
+    # print(metadata.thing_dataset_id_to_contiguous_id)
+
+    
     args = default_argument_parser().parse_args()
     print("Command Line Args:", args)
     launch(
@@ -168,3 +190,4 @@ if __name__ == "__main__":
         dist_url=args.dist_url,
         args=(args,),
     )
+    

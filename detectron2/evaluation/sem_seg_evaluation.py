@@ -153,6 +153,8 @@ class SemSegEvaluator(DatasetEvaluator):
         json_list = []
         for label in np.unique(sem_seg):
             if self._contiguous_id_to_dataset_id is not None:
+                #print("_contiguous_id_to_dataset_id:{}".format(self._contiguous_id_to_dataset_id))
+                #print("label:{}".format(label))
                 assert (
                     label in self._contiguous_id_to_dataset_id
                 ), "Label {} is not in the metadata info for {}".format(label, self._dataset_name)

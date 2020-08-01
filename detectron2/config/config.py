@@ -19,7 +19,7 @@ class CfgNode(_CfgNode):
     2. Support config versioning.
        When attempting to merge an old config, it will convert the old config automatically.
     """
-
+    
     # Note that the default value of allow_unsafe is changed to True
     def merge_from_file(self, cfg_filename: str, allow_unsafe: bool = True) -> None:
         assert PathManager.isfile(cfg_filename), f"Config file '{cfg_filename}' does not exist!"

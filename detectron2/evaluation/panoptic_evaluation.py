@@ -40,7 +40,7 @@ class COCOPanopticEvaluator(DatasetEvaluator):
         self._stuff_contiguous_id_to_dataset_id = {
             v: k for k, v in self._metadata.stuff_dataset_id_to_contiguous_id.items()
         }
-
+        
         self._predictions_json = os.path.join(output_dir, "predictions.json")
 
     def reset(self):

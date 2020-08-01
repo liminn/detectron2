@@ -1,0 +1,27 @@
+_BASE_: "../Base-RCNN-FPN.yaml"
+MODEL:
+  WEIGHTS: "detectron2://ImageNetPretrained/MSRA/R-50.pkl"
+  RESNETS:
+    DEPTH: 50
+  META_ARCHITECTURE: "PanopticFPN"
+  MASK_ON: True
+  SEM_SEG_HEAD:
+    LOSS_WEIGHT: 0.5
+  ROI_HEADS:
+    NUM_CLASSES: 1   # Number of foreground classes
+  SEM_SEG_HEAD:
+    NUM_CLASSES: 2  # Number of classes in the semantic segmentation head
+DATASETS:
+  TRAIN: ("custom_text_train_separated",)
+  TEST: ("custom_text_val_separated",)
+DATALOADER:
+  FILTER_EMPTY_ANNOTATIONS: False
+DATALOADER:
+  NUM_WORKERS: 4
+SOLVER:
+  IMS_PER_BATCH: 4 #16
+  BASE_LR: 0.005 #0.0025  #0.02
+  STEPS: (60000, 80000)
+  MAX_ITER: 100000
+  LR_SCHEDULER_NAME: WarmupCosineLR #"WarmupMultiStepLR"
+OUTPUT_DIR: "/media/dell/6e8a7942-5a27-4e56-bffe-1af5a12aabb4/data/train_results/panoptic_seg/detectron2/text_20200724"

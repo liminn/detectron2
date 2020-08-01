@@ -96,7 +96,7 @@ def register_coco_panoptic_separated(
         evaluator_type="coco_panoptic_seg",
         **metadata
     )
-
+    
     semantic_name = name + "_stuffonly"
     DatasetCatalog.register(semantic_name, lambda: load_sem_seg(sem_seg_root, image_root))
     MetadataCatalog.get(semantic_name).set(

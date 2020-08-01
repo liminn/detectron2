@@ -198,7 +198,7 @@ def check_image_size(dataset_dict, image):
                     expected_wh,
                 )
             )
-
+    
     # To ensure bbox always remap to original image size
     if "width" not in dataset_dict:
         dataset_dict["width"] = image.shape[1]

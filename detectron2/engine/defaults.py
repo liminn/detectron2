@@ -169,7 +169,7 @@ class DefaultPredictor:
     Attributes:
         metadata (Metadata): the metadata of the underlying dataset, obtained from
             cfg.DATASETS.TEST.
-
+    
     Examples:
     ::
         pred = DefaultPredictor(cfg)
@@ -180,9 +180,10 @@ class DefaultPredictor:
     def __init__(self, cfg):
         self.cfg = cfg.clone()  # cfg can be modified by model
         self.model = build_model(self.cfg)
+        #print(self.model)
         self.model.eval()
         self.metadata = MetadataCatalog.get(cfg.DATASETS.TEST[0])
-
+        
         checkpointer = DetectionCheckpointer(self.model)
         checkpointer.load(cfg.MODEL.WEIGHTS)
 
@@ -211,9 +212,11 @@ class DefaultPredictor:
             height, width = original_image.shape[:2]
             image = self.aug.get_transform(original_image).apply_image(original_image)
             image = torch.as_tensor(image.astype("float32").transpose(2, 0, 1))
-
+            
             inputs = {"image": image, "height": height, "width": width}
+            #torch.save(self.model, "/home/dell/zhanglimin/code/panoptic_seg/detectron2/final_model_custom.pkl")
             predictions = self.model([inputs])[0]
+            #predictions = self.model([inputs])
             return predictions
 
 
@@ -324,7 +327,7 @@ class DefaultTrainer(SimpleTrainer):
         cfg = self.cfg.clone()
         cfg.defrost()
         cfg.DATALOADER.NUM_WORKERS = 0  # save some memory and time for PreciseBN
-
+        
         ret = [
             hooks.IterationTimer(),
             hooks.LRScheduler(self.optimizer, self.scheduler),
