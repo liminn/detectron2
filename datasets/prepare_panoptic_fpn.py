@@ -86,7 +86,7 @@ if __name__ == "__main__":
     #dataset_dir = os.path.join(os.getenv("DETECTRON2_DATASETS", "datasets"), "coco")
     #dataset_dir = "/media/dell/6e8a7942-5a27-4e56-bffe-1af5a12aabb4/data/open_source/panoptic_annotations_trainval2017"
     #dataset_dir = "/media/dell/6e8a7942-5a27-4e56-bffe-1af5a12aabb4/data/card_panoptic_20200718/panoptic"
-    dataset_dir = "/media/dell/6e8a7942-5a27-4e56-bffe-1af5a12aabb4/data/text_panoptic_20200723/panoptic"
+    dataset_dir = "/media/dell/6e8a7942-5a27-4e56-bffe-1af5a12aabb4/data/text_panoptic_20201113/panoptic"
     #print(dataset_dir)
     
     # COCO_CATEGORIES = [
@@ -121,7 +121,7 @@ if __name__ == "__main__":
             dst = os.path.join(dir_100, basename + ".png")
             src = os.path.relpath(src, start=dir_100)
             os.symlink(src, dst)
-
+        
     link_val100(
         os.path.join(dataset_dir, "panoptic_val2017"),
         os.path.join(dataset_dir, "panoptic_val2017_100"),

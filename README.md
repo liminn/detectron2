@@ -27,7 +27,9 @@ ps: To rebuild detectron2 that's built from a local clone, use rm -rf build/ **/
 参考脚本：
 - `custom_2_coco_format/scripts/custom_2_coco_instance_format.py`: 生成instance任务的COCO格式数据
 - `custom_2_coco_format/scripts/custom_2_coco_panoptic_format.py`: 生成panoptic任务的COCO格式数据
+- 参考`/media/dell/6e8a7942-5a27-4e56-bffe-1af5a12aabb4/data/text_panoptic_20201113`文件夹，构建标准的文件夹路径
 - `datasets/prepare_panoptic_fpn.py`: 生成panoptic所需的sementaic segmentation mask
+- 注意：原图文件夹的后缀名均需要是".jpg"
 
 ## registe custom dataset
 参考脚本：
@@ -50,10 +52,16 @@ python3 train_net.py --config-file ../configs/COCO-PanopticSegmentation/panoptic
 ```
 
 visualize results:
-- `tools/inference.py`
+- 运行`tools/inference.py`
+- 生成可视化预测结果的同时，同时导出final_model.pkl(导出模型的路径在`detectron2.engine.DefaultPredictor`中进行修改)
 
 interface:
 - `interface/en_cn_text/panoptic_fpn_mix_text.py`
+- 会对benchamrk的每一个图片生成txt文件
+
+测试benchmark：
+- 运行`/home/dell/zhanglimin/code/pipline/ALG_benchmark_pipeline/benchmark/det_ocr/benchmark_det.py`
+
 
 # 4.相关实验结果
 - 参考文档：[全景分割模型试验对比](https://gostudyai.feishu.cn/docs/doccnHLX4JpFGYaHVedF10Ayl9p#)

@@ -139,8 +139,8 @@ class PanopticFPN(nn.Module):
         #         instance_mask = (panoptic_seg==id).cpu().numpy().astype(np.bool)
         #         custom_results.append([instance_mask, dict_item["score"]])
         
-        # #return processed_results
-        # return custom_results
+        ##return processed_results
+        #return custom_results
 
 
 def combine_semantic_and_instance_outputs(

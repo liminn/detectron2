@@ -61,14 +61,14 @@ if __name__ == "__main__":
     #dir = "/media/dell/data/det/valid"
     #dir = "/media/dell/data/det/train"
     ### text
-    dir = "/media/dell/6e8a7942-5a27-4e56-bffe-1af5a12aabb4/data/TEXT_DET/train"
-    #dir = "/media/dell/6e8a7942-5a27-4e56-bffe-1af5a12aabb4/data/TEXT_DET/valid"
+    #dir = "/media/dell/6e8a7942-5a27-4e56-bffe-1af5a12aabb4/data/TEXT_DET/train"
+    dir = "/media/dell/6e8a7942-5a27-4e56-bffe-1af5a12aabb4/data/TEXT_DET/valid"
     # coco文件的保存路径
     ### card
     #json_save_path = "/media/dell/6e8a7942-5a27-4e56-bffe-1af5a12aabb4/data/card_instance_train.json"
     ### text
-    json_save_path = "/media/dell/6e8a7942-5a27-4e56-bffe-1af5a12aabb4/data/text_panoptic_20200723/text_instance_train.json"
-    #json_save_path = "/media/dell/6e8a7942-5a27-4e56-bffe-1af5a12aabb4/data/text_panoptic_20200723/text_instance_valid.json"
+    #json_save_path = "/media/dell/6e8a7942-5a27-4e56-bffe-1af5a12aabb4/data/text_panoptic_20201113/text_instance_train.json"
+    json_save_path = "/media/dell/6e8a7942-5a27-4e56-bffe-1af5a12aabb4/data/text_panoptic_20201113/text_instance_valid.json"
     
     image_paths = get_all_image_path(dir)
     image_id = 0

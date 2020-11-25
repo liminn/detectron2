@@ -255,20 +255,20 @@ MetadataCatalog.get("custom_card_val_separated").stuff_dataset_id_to_contiguous_
 ###########
 name = "custom_text_train"
 metadata = {}
-image_root = "/media/dell/6e8a7942-5a27-4e56-bffe-1af5a12aabb4/data/text_panoptic_20200723/coco/train2017"
-panoptic_root = "/media/dell/6e8a7942-5a27-4e56-bffe-1af5a12aabb4/data/text_panoptic_20200723/panoptic/panoptic_train2017" 
-panoptic_json = "/media/dell/6e8a7942-5a27-4e56-bffe-1af5a12aabb4/data/text_panoptic_20200723/panoptic/annotations/panoptic_train2017.json"
-sem_seg_root = "/media/dell/6e8a7942-5a27-4e56-bffe-1af5a12aabb4/data/text_panoptic_20200723/panoptic/panoptic_stuff_train2017"
-instances_json = "/media/dell/6e8a7942-5a27-4e56-bffe-1af5a12aabb4/data/text_panoptic_20200723/coco/annotations/instances_train2017.json"
+image_root = "/media/dell/6e8a7942-5a27-4e56-bffe-1af5a12aabb4/data/text_panoptic_20201113/coco/train2017"
+panoptic_root = "/media/dell/6e8a7942-5a27-4e56-bffe-1af5a12aabb4/data/text_panoptic_20201113/panoptic/panoptic_train2017" 
+panoptic_json = "/media/dell/6e8a7942-5a27-4e56-bffe-1af5a12aabb4/data/text_panoptic_20201113/panoptic/annotations/panoptic_train2017.json"
+sem_seg_root = "/media/dell/6e8a7942-5a27-4e56-bffe-1af5a12aabb4/data/text_panoptic_20201113/panoptic/panoptic_stuff_train2017"
+instances_json = "/media/dell/6e8a7942-5a27-4e56-bffe-1af5a12aabb4/data/text_panoptic_20201113/coco/annotations/instances_train2017.json"
 register_coco_panoptic_separated(name, metadata, image_root, panoptic_root, panoptic_json, sem_seg_root, instances_json)
 
 name = "custom_text_val"
 metadata = {}
-image_root = "/media/dell/6e8a7942-5a27-4e56-bffe-1af5a12aabb4/data/text_panoptic_20200723/coco/val2017"
-panoptic_root = "/media/dell/6e8a7942-5a27-4e56-bffe-1af5a12aabb4/data/text_panoptic_20200723/panoptic/panoptic_val2017" 
-panoptic_json = "/media/dell/6e8a7942-5a27-4e56-bffe-1af5a12aabb4/data/text_panoptic_20200723/panoptic/annotations/panoptic_val2017.json"
-sem_seg_root = "/media/dell/6e8a7942-5a27-4e56-bffe-1af5a12aabb4/data/text_panoptic_20200723/panoptic/panoptic_stuff_val2017"
-instances_json = "/media/dell/6e8a7942-5a27-4e56-bffe-1af5a12aabb4/data/text_panoptic_20200723/coco/annotations/instances_val2017.json"
+image_root = "/media/dell/6e8a7942-5a27-4e56-bffe-1af5a12aabb4/data/text_panoptic_20201113/coco/val2017"
+panoptic_root = "/media/dell/6e8a7942-5a27-4e56-bffe-1af5a12aabb4/data/text_panoptic_20201113/panoptic/panoptic_val2017" 
+panoptic_json = "/media/dell/6e8a7942-5a27-4e56-bffe-1af5a12aabb4/data/text_panoptic_20201113/panoptic/annotations/panoptic_val2017.json"
+sem_seg_root = "/media/dell/6e8a7942-5a27-4e56-bffe-1af5a12aabb4/data/text_panoptic_20201113/panoptic/panoptic_stuff_val2017"
+instances_json = "/media/dell/6e8a7942-5a27-4e56-bffe-1af5a12aabb4/data/text_panoptic_20201113/coco/annotations/instances_val2017.json"
 register_coco_panoptic_separated(name, metadata, image_root, panoptic_root, panoptic_json, sem_seg_root, instances_json)
 
 MetadataCatalog.get("custom_text_train_separated").thing_classes = ['text']

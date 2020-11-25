@@ -185,19 +185,19 @@ def main(image_paths, label_panoptic_mask_save_dir, json_save_path,image_save_pa
 if __name__ == "__main__":
     
     # 定义原图路径(原图+标注txt)
-    #img_dir = "/media/dell/6e8a7942-5a27-4e56-bffe-1af5a12aabb4/data/TEXT_DET/train"
-    img_dir = "/media/dell/6e8a7942-5a27-4e56-bffe-1af5a12aabb4/data/TEXT_DET/valid"
+    img_dir = "/media/dell/6e8a7942-5a27-4e56-bffe-1af5a12aabb4/data/TEXT_DET/train"
+    #img_dir = "/media/dell/6e8a7942-5a27-4e56-bffe-1af5a12aabb4/data/TEXT_DET/valid"
     image_paths = get_all_image_path(img_dir)
     print(len(image_paths))
     # 定义json文件路径
-    #json_save_path = "/media/dell/6e8a7942-5a27-4e56-bffe-1af5a12aabb4/data/text_panoptic_20200723/text_panoptic_train.json"
-    json_save_path = "/media/dell/6e8a7942-5a27-4e56-bffe-1af5a12aabb4/data/text_panoptic_20200723/text_panoptic_valid.json"
+    json_save_path = "/media/dell/6e8a7942-5a27-4e56-bffe-1af5a12aabb4/data/text_panoptic_20201113/text_panoptic_train.json"
+    #json_save_path = "/media/dell/6e8a7942-5a27-4e56-bffe-1af5a12aabb4/data/text_panoptic_20201113/text_panoptic_valid.json"
     # 定义原图存储路径
-    #image_save_path = "/media/dell/6e8a7942-5a27-4e56-bffe-1af5a12aabb4/data/text_panoptic_20200723/text_panoptic_src_train"
-    image_save_path = "/media/dell/6e8a7942-5a27-4e56-bffe-1af5a12aabb4/data/text_panoptic_20200723/text_panoptic_src_valid"
+    image_save_path = "/media/dell/6e8a7942-5a27-4e56-bffe-1af5a12aabb4/data/text_panoptic_20201113/text_panoptic_src_train"
+    #image_save_path = "/media/dell/6e8a7942-5a27-4e56-bffe-1af5a12aabb4/data/text_panoptic_20201113/text_panoptic_src_valid"
     # 定义panoptic_mask存储路径
-    #label_panoptic_mask_save_dir = "/media/dell/6e8a7942-5a27-4e56-bffe-1af5a12aabb4/data/text_panoptic_20200723/text_panoptic_mask_train"
-    label_panoptic_mask_save_dir = "/media/dell/6e8a7942-5a27-4e56-bffe-1af5a12aabb4/data/text_panoptic_20200723/text_panoptic_mask_valid"
+    label_panoptic_mask_save_dir = "/media/dell/6e8a7942-5a27-4e56-bffe-1af5a12aabb4/data/text_panoptic_20201113/text_panoptic_mask_train"
+    #label_panoptic_mask_save_dir = "/media/dell/6e8a7942-5a27-4e56-bffe-1af5a12aabb4/data/text_panoptic_20201113/text_panoptic_mask_valid"
     
     main(image_paths, label_panoptic_mask_save_dir, json_save_path,image_save_path)
 

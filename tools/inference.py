@@ -13,7 +13,7 @@ if __name__ == "__main__":
     image_root = "/media/dell/6e8a7942-5a27-4e56-bffe-1af5a12aabb4/data/text_panoptic_20200723/coco/val2017"
     image_list = glob.glob(image_root+"/*.jpg")
     print(image_list)
-    save_path = "/media/dell/6e8a7942-5a27-4e56-bffe-1af5a12aabb4/data/train_results/panoptic_seg/detectron2/text_20200724/inference_visible"
+    save_path = "/media/dell/6e8a7942-5a27-4e56-bffe-1af5a12aabb4/data/train_results/panoptic_seg/detectron2/text_20201113/inference_visible"
     if not os.path.exists(save_path):
         os.makedirs(save_path)
     for image_path in image_list:
@@ -25,7 +25,7 @@ if __name__ == "__main__":
         #cfg.MODEL.WEIGHTS = "/media/dell/6e8a7942-5a27-4e56-bffe-1af5a12aabb4/data/train_results/panoptic_seg/detectron2/card_20200722/model_final.pth"
         ### text
         cfg.merge_from_file("/home/dell/zhanglimin/code/panoptic_seg/detectron2/configs/COCO-PanopticSegmentation/panoptic_fpn_R_50_1x_text.yaml")
-        cfg.MODEL.WEIGHTS = "/media/dell/6e8a7942-5a27-4e56-bffe-1af5a12aabb4/data/train_results/panoptic_seg/detectron2/text_20200724/model_final.pth"
+        cfg.MODEL.WEIGHTS = "/media/dell/6e8a7942-5a27-4e56-bffe-1af5a12aabb4/data/train_results/panoptic_seg/detectron2/text_20201113/model_final.pth"
         predictor = DefaultPredictor(cfg)
         pre_results = predictor(image) 
         #print(pre_results.keys()) # dict_keys(['sem_seg', 'instances', 'panoptic_seg'])

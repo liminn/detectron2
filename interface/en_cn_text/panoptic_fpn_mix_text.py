@@ -3,7 +3,7 @@ import cv2
 import torch 
 import glob
 import numpy as np
-os.environ["CUDA_VISIBLE_DEVICES"] = "-1"
+#os.environ["CUDA_VISIBLE_DEVICES"] = "-1"
 
 class PnopticFPN(object):
     def __init__(self, ckpt_path="", min_size = 800, max_size = 1333):
@@ -201,6 +201,8 @@ def parse_panoptic_results_custom(predictions, ratio_h, ratio_w):
 def visualize_results(image_path, results, save_path,txt_save_path):
     if not os.path.exists(save_path):
         os.makedirs(save_path)
+    if not os.path.exists(txt_save_path):
+        os.makedirs(txt_save_path)
     image = cv2.imread(image_path)
     base_name = os.path.split(image_path)[1]
     prefix = base_name.split(".jpeg")[0]
@@ -234,25 +236,32 @@ def visualize_results(image_path, results, save_path,txt_save_path):
     base_name = os.path.split(image_path)[1]
     prefix = base_name.split(".")[0]
     image_save_path = os.path.join(save_path, prefix + "_det" + ".jpg")
-    #cv2.imwrite(image_save_path, im_show_1)
+    cv2.imwrite(image_save_path, im_show_1)
 
 
 if __name__ == "__main__":
     # define model path
-    model_path = "/home/dell/zhanglimin/code/panoptic_seg/detectron2/final_model.pkl"
+    #model_path = "/home/dell/zhanglimin/code/panoptic_seg/detectron2/final_model.pkl"
+    model_path = "/media/dell/6e8a7942-5a27-4e56-bffe-1af5a12aabb4/data/train_results/panoptic_seg/detectron2/text_20201113/final_model.pkl"
+
     # instantiate PnopticFPN
-    p = PnopticFPN(model_path)
+    p = PnopticFPN(model_path,min_size = 400, max_size = 1333)
     # define image list
     #image_root = "/media/dell/6e8a7942-5a27-4e56-bffe-1af5a12aabb4/data/text_panoptic_20200723/coco/val2017"
-    image_root = "/media/dell/6e8a7942-5a27-4e56-bffe-1af5a12aabb4/data/BENCHMARK/文本检测&OCR/OCR-20200102_en_仅框_labelme/"
-    #image_root = "/media/dell/6e8a7942-5a27-4e56-bffe-1af5a12aabb4/data/BENCHMARK/cn-text-detection"
-    #image_list = glob.glob(image_root+"/*/*/*/*.jpeg")
+    image_root = "/media/dell/6e8a7942-5a27-4e56-bffe-1af5a12aabb4/data/BENCHMARK/文本检测&OCR/OCR-20200102_en_仅框_labelme"
+    image_list = glob.glob(image_root+"/*/*.jp*g")
+    # image_root = "/media/dell/6e8a7942-5a27-4e56-bffe-1af5a12aabb4/data/BENCHMARK/cn-text-detection"
+    # image_list = glob.glob(image_root+"/*/*/*/*.jpeg")
     #image_list = glob.glob("/media/dell/6e8a7942-5a27-4e56-bffe-1af5a12aabb4/temp22/OCR错误数据/ocr_ch_bad_cases_stg/*.jpg")
     #image_list = image_list*20
     print(image_list)
     # define save path
-    save_path = "/media/dell/6e8a7942-5a27-4e56-bffe-1af5a12aabb4/temp22/OCR错误数据/ocr_ch_bad_cases_stg_panoptic_seg_20200730"
-    txt_ave_path = "/media/dell/6e8a7942-5a27-4e56-bffe-1af5a12aabb4/temp22/OCR错误数据/ocr_ch_bad_cases_stg_panoptic_seg_20200730_txt"
+    #save_path = "/media/dell/6e8a7942-5a27-4e56-bffe-1af5a12aabb4/temp22/OCR错误数据/ocr_ch_bad_cases_stg_panoptic_seg_20200730"
+    #txt_ave_path = "/media/dell/6e8a7942-5a27-4e56-bffe-1af5a12aabb4/temp22/OCR错误数据/ocr_ch_bad_cases_stg_panoptic_seg_20200730_txt"
+    #save_path = "/media/dell/6e8a7942-5a27-4e56-bffe-1af5a12aabb4/data/BENCHMARK/cn-text-detection_panoptic_seg_min400_max1333_20201114"
+    #txt_ave_path = "/media/dell/6e8a7942-5a27-4e56-bffe-1af5a12aabb4/data/BENCHMARK/cn-text-detection_panoptic_seg_min400_max1333_20201114_txt"
+    save_path = "/media/dell/6e8a7942-5a27-4e56-bffe-1af5a12aabb4/data/BENCHMARK/en-text-detection_panoptic_seg_min400_max1333_20201114"
+    txt_ave_path = "/media/dell/6e8a7942-5a27-4e56-bffe-1af5a12aabb4/data/BENCHMARK/en-text-detection_panoptic_seg_min400_max1333_20201114_txt"
     for image_path in image_list:
         # inference
         predictions, ratio_h, ratio_w = p.inference(image_path)

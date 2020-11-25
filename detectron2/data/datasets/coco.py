@@ -205,7 +205,7 @@ def load_sem_seg(gt_root, image_root, gt_ext="png", image_ext="jpg"):
     as input images. Ground truth and input images are matched using file paths relative to
     "gt_root" and "image_root" respectively without taking into account file extensions.
     This works for COCO as well as some other datasets.
-
+    
     Args:
         gt_root (str): full path to ground truth semantic segmentation files. Semantic segmentation
             annotations are stored as images with integer values in pixels that represent

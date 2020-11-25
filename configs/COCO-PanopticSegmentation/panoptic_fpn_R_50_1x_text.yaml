@@ -24,4 +24,4 @@ SOLVER:
   STEPS: (60000, 80000)
   MAX_ITER: 100000
   LR_SCHEDULER_NAME: WarmupCosineLR #"WarmupMultiStepLR"
-OUTPUT_DIR: "/media/dell/6e8a7942-5a27-4e56-bffe-1af5a12aabb4/data/train_results/panoptic_seg/detectron2/text_20200724"
+OUTPUT_DIR: "/media/dell/6e8a7942-5a27-4e56-bffe-1af5a12aabb4/data/train_results/panoptic_seg/detectron2/text_20201113"
