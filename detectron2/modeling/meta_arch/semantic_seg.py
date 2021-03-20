@@ -151,7 +151,7 @@ class SemSegFPNHead(nn.Module):
             self.add_module(in_feature, self.scale_heads[-1])
         self.predictor = Conv2d(conv_dims, num_classes, kernel_size=1, stride=1, padding=0)
         weight_init.c2_msra_fill(self.predictor)
-
+        
     def forward(self, features, targets=None):
         """
         Returns:
@@ -166,13 +166,14 @@ class SemSegFPNHead(nn.Module):
                 x, scale_factor=self.common_stride, mode="bilinear", align_corners=False
             )
             return x, {}
-
+        
     def layers(self, features):
         for i, f in enumerate(self.in_features):
             if i == 0:
                 x = self.scale_heads[i](features[f])
             else:
                 x = x + self.scale_heads[i](features[f])
+        #x = self.predictor(x)
         x = self.predictor(x)
         return x
 

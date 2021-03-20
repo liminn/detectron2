@@ -240,28 +240,32 @@ def visualize_results(image_path, results, save_path,txt_save_path):
 
 
 if __name__ == "__main__":
+    #"""
     # define model path
     #model_path = "/home/dell/zhanglimin/code/panoptic_seg/detectron2/final_model.pkl"
-    model_path = "/media/dell/6e8a7942-5a27-4e56-bffe-1af5a12aabb4/data/train_results/panoptic_seg/detectron2/text_20201113/final_model.pkl"
-
+    model_path = "/media/dell/6e8a7942-5a27-4e56-bffe-1af5a12aabb4/data/train_results/panoptic_seg/detectron2/text_res50_changed_min256_max_1333_20201203/final_model.pkl"
+    
     # instantiate PnopticFPN
-    p = PnopticFPN(model_path,min_size = 400, max_size = 1333)
+    #p = PnopticFPN(model_path,min_size = 400, max_size = 1333)
+    #p = PnopticFPN(model_path,min_size = 256, max_size = 1333)
+    p = PnopticFPN(model_path,min_size = 128, max_size = 1333)
     # define image list
     #image_root = "/media/dell/6e8a7942-5a27-4e56-bffe-1af5a12aabb4/data/text_panoptic_20200723/coco/val2017"
     image_root = "/media/dell/6e8a7942-5a27-4e56-bffe-1af5a12aabb4/data/BENCHMARK/文本检测&OCR/OCR-20200102_en_仅框_labelme"
     image_list = glob.glob(image_root+"/*/*.jp*g")
-    # image_root = "/media/dell/6e8a7942-5a27-4e56-bffe-1af5a12aabb4/data/BENCHMARK/cn-text-detection"
-    # image_list = glob.glob(image_root+"/*/*/*/*.jpeg")
+    #image_root = "/media/dell/6e8a7942-5a27-4e56-bffe-1af5a12aabb4/data/BENCHMARK/cn-text-detection"
+    #image_list = glob.glob(image_root+"/*/*/*/*.jpeg")
     #image_list = glob.glob("/media/dell/6e8a7942-5a27-4e56-bffe-1af5a12aabb4/temp22/OCR错误数据/ocr_ch_bad_cases_stg/*.jpg")
     #image_list = image_list*20
     print(image_list)
     # define save path
     #save_path = "/media/dell/6e8a7942-5a27-4e56-bffe-1af5a12aabb4/temp22/OCR错误数据/ocr_ch_bad_cases_stg_panoptic_seg_20200730"
     #txt_ave_path = "/media/dell/6e8a7942-5a27-4e56-bffe-1af5a12aabb4/temp22/OCR错误数据/ocr_ch_bad_cases_stg_panoptic_seg_20200730_txt"
-    #save_path = "/media/dell/6e8a7942-5a27-4e56-bffe-1af5a12aabb4/data/BENCHMARK/cn-text-detection_panoptic_seg_min400_max1333_20201114"
-    #txt_ave_path = "/media/dell/6e8a7942-5a27-4e56-bffe-1af5a12aabb4/data/BENCHMARK/cn-text-detection_panoptic_seg_min400_max1333_20201114_txt"
-    save_path = "/media/dell/6e8a7942-5a27-4e56-bffe-1af5a12aabb4/data/BENCHMARK/en-text-detection_panoptic_seg_min400_max1333_20201114"
-    txt_ave_path = "/media/dell/6e8a7942-5a27-4e56-bffe-1af5a12aabb4/data/BENCHMARK/en-text-detection_panoptic_seg_min400_max1333_20201114_txt"
+    save_path = "/media/dell/6e8a7942-5a27-4e56-bffe-1af5a12aabb4/data/BENCHMARK/en-text_res50_changed_min256_max_1333_20201203_128"
+    txt_ave_path = "/media/dell/6e8a7942-5a27-4e56-bffe-1af5a12aabb4/data/BENCHMARK/en-text_res50_changed_min256_max_1333_20201203_128"
+    #save_path = "/media/dell/6e8a7942-5a27-4e56-bffe-1af5a12aabb4/data/BENCHMARK/cn-text_res50_changed_min256_max_1333_20201203_128"
+    #txt_ave_path = "/media/dell/6e8a7942-5a27-4e56-bffe-1af5a12aabb4/data/BENCHMARK/cn-text_res50_changed_min256_max_1333_20201203_128"
+
     for image_path in image_list:
         # inference
         predictions, ratio_h, ratio_w = p.inference(image_path)
@@ -273,6 +277,27 @@ if __name__ == "__main__":
         #print(results)
         # visual results
         visualize_results(image_path, results, save_path, txt_ave_path)
+    #"""
 
-
+    """
+    ### test time
+    import time
+    # define model path
+    model_path = "/media/dell/6e8a7942-5a27-4e56-bffe-1af5a12aabb4/data/train_results/panoptic_seg/detectron2/text_20201113/final_model.pkl"
+    #model_path = "/media/dell/6e8a7942-5a27-4e56-bffe-1af5a12aabb4/data/train_results/panoptic_seg/detectron2/text_20201128_res50_changed/final_model.pkl"
+    
+    # instantiate PnopticFPN
+    model = torch.load(model_path, map_location="cuda").to("cuda").eval()
+    input_tensor = torch.rand((3,500,500))
+    #start_time = time.time()
+    inputs = {"image": input_tensor, "height": 400, "width": 400}
+    time_list = []
+    for i in range(200):
+        start_time = time.time()
+        res = model([inputs])[0]["panoptic_seg"]
+        single_time = time.time() - start_time
+        time_list.append(single_time)
+        print("average time:", sum(time_list)/len(time_list))
+        torch.cuda.empty_cache()
+    """
 

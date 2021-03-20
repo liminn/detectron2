@@ -214,11 +214,11 @@ class DefaultPredictor:
             image = torch.as_tensor(image.astype("float32").transpose(2, 0, 1))
             
             inputs = {"image": image, "height": height, "width": width}
-            torch.save(self.model, "/media/dell/6e8a7942-5a27-4e56-bffe-1af5a12aabb4/data/train_results/panoptic_seg/detectron2/text_20201113/final_model.pkl")
+            torch.save(self.model, "/media/dell/6e8a7942-5a27-4e56-bffe-1af5a12aabb4/data/train_results/panoptic_seg/detectron2/text_res50_changed_min256_max_1333_20201203/final_model.pkl")
             predictions = self.model([inputs])[0]
             #predictions = self.model([inputs])
             return predictions
-
+            
 
 class DefaultTrainer(SimpleTrainer):
     """

@@ -16,11 +16,11 @@ MODEL:
     NUM_CLASSES: 2  # Number of classes in the semantic segmentation head
     LOSS_WEIGHT: 0.5
     #COMMON_STRIDE: 2 #2 # 4
-#INPUT:
-  #MIN_SIZE_TRAIN: (128,256,) #(128,) #(256,) #(96,)
-  #MAX_SIZE_TRAIN: 1333
-  #MIN_SIZE_TEST: 128 #256 #96 
-  #MAX_SIZE_TEST: 1333
+# INPUT:
+#   MIN_SIZE_TRAIN: (128,256,) #(128,) #(256,) #(96,)
+#   MAX_SIZE_TRAIN: 1333
+#   MIN_SIZE_TEST: 128 #256 #96 
+#   MAX_SIZE_TEST: 1333
 DATASETS:
   TRAIN: ("custom_text_train_separated",)
   TEST: ("custom_text_val_separated",)

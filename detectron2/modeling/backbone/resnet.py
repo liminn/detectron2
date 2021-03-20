@@ -593,10 +593,11 @@ def build_resnet_backbone(cfg, input_shape):
         18: [2, 2, 2, 2],
         34: [3, 4, 6, 3],
         50: [3, 4, 6, 3],
+        #50: [2, 2, 3, 2],
         101: [3, 4, 23, 3],
         152: [3, 8, 36, 3],
     }[depth]
-
+    
     if depth in [18, 34]:
         assert out_channels == 64, "Must set MODEL.RESNETS.RES2_OUT_CHANNELS = 64 for R18/R34"
         assert not any(
